@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第四十九签 · 餓虎得食</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #1a1510 0%, #2d2418 50%, #1a1510 100%);
+      font-family: "Noto Serif SC", Georgia, serif;
+      padding: 40px 20px 60px;
+      color: #c9a85c;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .sign-number {
+      display: inline-block;
+      padding: 8px 28px;
+      background: linear-gradient(135deg, #d4a84b 0%, #f0d78c 50%, #d4a84b 100%);
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .sign-number span {
+      font-size: 13px;
+      color: #1a1510;
+      letter-spacing: 4px;
+      font-weight: 600;
+    }
+
+    .title {
+      font-size: 42px;
+      color: #f0d78c;
+      margin: 16px 0;
+      font-weight: 700;
+      text-shadow: 0 2px 24px rgba(240, 215, 140, 0.3);
+      letter-spacing: 8px;
+    }
+
+    .rating-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .line-decoration {
+      width: 50px;
+      height: 1px;
+    }
+
+    .line-left {
+      background: linear-gradient(90deg, transparent, #d4a84b);
+    }
+
+    .line-right {
+      background: linear-gradient(90deg, #d4a84b, transparent);
+    }
+
+    .rating {
+      color: #e8c55a;
+      font-size: 22px;
+      padding: 8px 24px;
+      border: 2px solid #d4a84b;
+      border-radius: 50px;
+      font-weight: 700;
+      letter-spacing: 4px;
+    }
+
+    /* Theme Box */
+    .theme-box {
+      text-align: center;
+      margin-bottom: 36px;
+      padding: 20px;
+      background: rgba(212, 168, 75, 0.08);
+      border-radius: 12px;
+      border: 1px solid rgba(212, 168, 75, 0.2);
+    }
+
+    .theme-title {
+      font-size: 17px;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .theme-subtitle {
+      font-size: 13px;
+      color: #8a7a5a;
+    }
+
+    /* Section Title */
+    .section-title {
+      color: #d4a84b;
+      font-size: 14px;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Fortune Lines */
+    .fortune-lines {
+      margin-bottom: 36px;
+    }
+
+    .fortune-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .fortune-item:active {
+      transform: scale(0.98);
+    }
+
+    .fortune-item.active {
+      background: linear-gradient(135deg, rgba(212, 168, 75, 0.15) 0%, rgba(240, 215, 140, 0.08) 100%);
+      border: 1px solid rgba(212, 168, 75, 0.4);
+    }
+
+    .fortune-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .fortune-num {
+      color: #d4a84b;
+      font-size: 14px;
+      font-weight: 600;
+      min-width: 20px;
+    }
+
+    .fortune-content {
+      flex: 1;
+    }
+
+    .fortune-original {
+      color: #f0d78c;
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .fortune-meaning {
+      font-size: 14px;
+      color: #c9a85c;
+    }
+
+    .fortune-detail {
+      font-size: 13px;
+      color: #9a8a6a;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(212, 168, 75, 0.2);
+      display: none;
+    }
+
+    .fortune-item.active .fortune-detail {
+      display: block;
+    }
+
+    .fortune-arrow {
+      color: #7a6a4a;
+      font-size: 11px;
+      transition: transform 0.3s ease;
+    }
+
+    .fortune-item.active .fortune-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Categories */
+    .categories {
+      margin-bottom: 36px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .category-item {
+      background: rgba(212, 168, 75, 0.08);
+      border: 1px solid rgba(212, 168, 75, 0.2);
+      border-radius: 12px;
+      padding: 16px 8px;
+      text-align: center;
+    }
+
+    .category-icon {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .category-name {
+      font-size: 12px;
+      color: #c9a85c;
+      margin-bottom: 4px;
+    }
+
+    .category-status {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .category-status.great {
+      color: #e8c55a;
+    }
+
+    .category-status.good {
+      color: #b8a87a;
+    }
+
+    /* Advice */
+    .advice-box {
+      background: linear-gradient(135deg, rgba(212, 168, 75, 0.12) 0%, rgba(212, 168, 75, 0.05) 100%);
+      border: 1px solid rgba(212, 168, 75, 0.25);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .advice-title {
+      color: #f0d78c;
+      font-size: 17px;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .advice-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .advice-check {
+      color: #d4a84b;
+    }
+
+    .advice-text {
+      font-size: 14px;
+      color: #c9a85c;
+    }
+
+    .advice-footer {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(212, 168, 75, 0.2);
+    }
+
+    .advice-quote {
+      font-size: 13px;
+      color: #8a7a5a;
+      font-style: italic;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 36px;
+      font-size: 12px;
+      color: #5a4a3a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="sign-number">
+        <span>第四十九签</span>
+      </div>
+      <h1 class="title">餓虎得食</h1>
+      <div class="rating-row">
+        <div class="line-decoration line-left"></div>
+        <span class="rating">上上签</span>
+        <div class="line-decoration line-right"></div>
+      </div>
+    </div>
+
+    <!-- Theme -->
+    <div class="theme-box">
+      <p class="theme-title">人生旅途 · 有榮有辱</p>
+      <p class="theme-subtitle">苦尽甘来，遂心如意之兆</p>
+    </div>
+
+    <!-- Fortune Lines -->
+    <div class="fortune-lines">
+      <h2 class="section-title">— 签文详解 —</h2>
+      
+      <div class="fortune-item" onclick="toggleItem(this)">
+        <div class="fortune-header">
+          <span class="fortune-num">1</span>
+          <div class="fortune-content">
+            <p class="fortune-original">餓虎得食喜氣歡</p>
+            <p class="fortune-meaning">时运已至，蓄势待发</p>
+            <p class="fortune-detail">如饥虎得食，积蓄已久的能量终将释放</p>
+          </div>
+          <span class="fortune-arrow">▼</span>
+        </div>
+      </div>
+
+      <div class="fortune-item" onclick="toggleItem(this)">
+        <div class="fortune-header">
+          <span class="fortune-num">2</span>
+          <div class="fortune-content">
+            <p class="fortune-original">求名應試主高遷</p>
+            <p class="fortune-meaning">功名顺遂，贵人相助</p>
+            <p class="fortune-detail">求学、考试、晋升皆有吉兆</p>
+          </div>
+          <span class="fortune-arrow">▼</span>
+        </div>
+      </div>
+
+      <div class="fortune-item" onclick="toggleItem(this)">
+        <div class="fortune-header">
+          <span class="fortune-num">3</span>
+          <div class="fortune-content">
+            <p class="fortune-original">出門吉利行人到</p>
+            <p class="fortune-meaning">出行平安，远人归来</p>
+            <p class="fortune-detail">外出办事顺利，期盼之人将至</p>
+          </div>
+          <span class="fortune-arrow">▼</span>
+        </div>
+      </div>
+
+      <div class="fortune-item" onclick="toggleItem(this)">
+        <div class="fortune-header">
+          <span class="fortune-num">4</span>
+          <div class="fortune-content">
+            <p class="fortune-original">是非口舌不相干</p>
+            <p class="fortune-meaning">小人远离，无需挂虑</p>
+            <p class="fortune-detail">流言蜚语皆不足惧</p>
+          </div>
+          <span class="fortune-arrow">▼</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="categories">
+      <h2 class="section-title">— 分类吉凶 —</h2>
+      <div class="category-grid">
+        <div class="category-item">
+          <div class="category-icon">📈</div>
+          <p class="category-name">事业</p>
+          <p class="category-status great">大吉</p>
+        </div>
+        <div class="category-item">
+          <div class="category-icon">📚</div>
+          <p class="category-name">学业</p>
+          <p class="category-status great">大吉</p>
+        </div>
+        <div class="category-item">
+          <div class="category-icon">🚶</div>
+          <p class="category-name">出行</p>
+          <p class="category-status good">吉</p>
+        </div>
+        <div class="category-item">
+          <div class="category-icon">🤝</div>
+          <p class="category-name">人际</p>
+          <p class="category-status good">吉</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advice -->
+    <div class="advice-box">
+      <h2 class="advice-title">行动指引</h2>
+      <div class="advice-item">
+        <span class="advice-check">✓</span>
+        <span class="advice-text">顺势而为，把握当下机遇</span>
+      </div>
+      <div class="advice-item">
+        <span class="advice-check">✓</span>
+        <span class="advice-text">保持谦逊，不骄不躁</span>
+      </div>
+      <div class="advice-item">
+        <span class="advice-check">✓</span>
+        <span class="advice-text">精进修行，福报自来</span>
+      </div>
+      <div class="advice-footer">
+        <p class="advice-quote">「把握命運，自掌乾坤」</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      佛教签诗 · 方便法门
+    </div>
+  </div>
+
+  <script>
+    function toggleItem(element) {
+      const allItems = document.querySelectorAll('.fortune-item');
+      allItems.forEach(item => {
+        if (item !== element) {
+          item.classList.remove('active');
+        }
+      });
+      element.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
